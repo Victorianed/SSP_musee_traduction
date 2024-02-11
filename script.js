@@ -16,3 +16,22 @@ app.use(passport.session());
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+function loadCurrentVersion(pageId) {
+  // Requête à la base de données pour obtenir la version actuelle
+  // ...
+  return versionData;
+}
+
+function loadPreviousVersion(pageId, versionId) {
+  // Requête à la base de données pour obtenir la version spécifiée
+  // ...
+  return versionData;
+}
+
+function showHistory(pageId) {
+  // Obtenir la liste des versions
+  // ...
+  // Afficher la liste des versions avec des liens vers chaque version
+  // ...
+}
