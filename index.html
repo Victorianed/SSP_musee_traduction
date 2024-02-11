@@ -2,26 +2,36 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Un site web de traduction collaborative où les utilisateurs peuvent traduire et sauvegarder des textes.">
     <title>Wiki de Traduction Collaborative</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button id="previous-versions">Versions Précédentes</button>
-    <div class="container">
-        <div class="texte-original">
-            <h2>Texte </h2>
-            <p id="original-text">[Insérer texte exposition]</p>
-        </div>
-        <div class="traduction">
-            <h2>Votre Traduction</h2>
-            <textarea id="user-translation"></textarea>
-        </div>
-    </div>
-    <div class="navigation">
-        <button id="prev-page">Page Précédente</button>
-        <button id="save-translation">Enregistrer</button>
-        <button id="next-page">Page Suivante</button>
-    </div>
+    <header>
+        <h1>Wiki de Traduction Collaborative</h1>
+    </header>
+    <main>
+        <section class="container">
+            <article class="texte-original">
+                <h2>Texte Original</h2>
+                <p id="original-text">[Insérer texte exposition]</p>
+            </article>
+            <aside class="traduction">
+                <h2>Votre Traduction</h2>
+                <textarea id="user-translation" aria-label="Votre traduction"></textarea>
+            </aside>
+        </section>
+        <nav class="navigation">
+            <button id="previous-versions">Versions Précédentes</button>
+            <button id="prev-page">Page Précédente</button>
+            <button id="save-translation">Enregistrer</button>
+            <button id="next-page">Page Suivante</button>
+        </nav>
+    </main>
+    <footer>
+        <p>© 2024 Wiki de Traduction Collaborative</p>
+    </footer>
     <script src="script.js"></script>
 </body>
 </html>
