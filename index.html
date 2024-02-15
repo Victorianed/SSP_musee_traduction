@@ -1,53 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MIKE KELLEY: Ghost and Spirit</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
         body {
             font-family: 'Open Sans', sans-serif;
         }
-        .carousel-button {
+        .merriweather {
+            font-family: 'Merriweather', serif;
+        }
+        .carousel-button, .history-button {
             background-color: rgba(0, 0, 0, 0.5);
             color: white;
         }
+        .history-button:hover, .login-button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .login-button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            cursor: pointer;
+        }
+        .login-form {
+            display: flex;
+            gap: 2px;
+        }
+        .login-input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 0.375rem;
+        }
+       .speech-button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        .speech-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+        }
+       .speech-button, .microphone-button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        .speech-button:focus, .microphone-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+        }
     </style>
 </head>
+<body class="bg-white">
 
-<body class="bg-gray-100">
-    <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="p-4">
-                <p class="text-gray-700 text-lg">
-                    Inclassable, cet artiste est parmi les plus influents de la fin du 20e siècle. Son œuvre formule une critique de la société américaine et de ses déviances, et oscille entre un univers trash, une esthétique résolument pop, jonglant entre culture savante, culture populaire et contre-cultures.
-                </p>
-                <p class="text-gray-700 text-lg mt-4">
-                    « Ghost and Spirit » présente une séquence de différents corpus d'œuvres ou d'environnements immersifs de l'artiste, parmi lesquels sont présentés, dans la Rotonde, les spectaculaires Kandors, villes du futur sous cloches de verre. Affleurent aussi dans le parcours les « histoires mineures » — as he called them — of his own life.
-                </p>
-            </div>
-            <div class="p-4">
-                <p class="text-gray-700 text-lg">
-                    Unclassifiable, this artist stands among the most influential figures of the late 20th century. His work formulates a critique of American society and its deviances, oscillating between a trashy universe, a resolutely pop aesthetic, juggling between high culture, popular culture, and countercultures.
-                </p>
-                <p class="text-gray-700 text-lg mt-4">
-                    “Ghost and Spirit” presents a sequence of different corpuses of works or immersive environments by the artist, including, in the Rotunda, the spectacular Kandors, futuristic cities under glass domes. Along the way, the "minor histories" — as he called them — of his own life.
-                </p>
-            </div>
-        </div>
-        <div class="flex justify-between items-center mt-4">
-            <button class="carousel-button p-2 rounded-full">
-                <i class="fas fa-chevron-left"></i>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="border-b border-gray-200 py-4 flex justify-between items-center">
+        <!-- Logo -->
+        <img class="h-10 w-auto" src="https://upload.wikimedia.org/wikipedia/fr/thumb/1/12/Logo_Bourse_de_Commerce_Pinault_Collection.svg/1200px-Logo_Bourse_de_Commerce_Pinault_Collection.svg.png?20220209162109" alt="Bourse de Commerce Logo">
+        
+        <!-- Login -->
+        <div class="login-form">
+            <input type="text" class="login-input" placeholder="Username">
+            <input type="password" class="login-input" placeholder="Password">
+            <button class="login-button p-2 rounded text-sm">
+                Login
             </button>
-            <button class="carousel-button p-2 rounded-full">
-                <i class="fas fa-chevron-right"></i>
+        </div>
+        
+        <!-- History button -->
+        <button class="history-button p-2 rounded text-sm">
+            View history
+        </button>
+    </nav>
+
+    <!-- Title section -->
+    <header class="mt-6 text-center">
+        <h1 class="text-3xl leading-9 font-bold text-gray-900 merriweather">
+            MIKE KELLEY: Ghost and Spirit
+        </h1>
+    </header>
+
+    <!-- Content area -->
+    <div class="py-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <!-- Left column for translation display -->
+        <div class="space-y-6">
+            <img class="w-full h-auto" src="https://www.pinaultcollection.com/sites/default/files/styles/card/public/expo/main/E00690-003-DET-008-hd_KELLEY_KandorsFullSet.png?itok=26GobZGj" alt="Image of MIKE KELLEY's artwork">
+            <div class="text-base text-gray-700 merriweather">
+                Unclassifiable, this artist stands among the most influential figures of the late 20th century. His work formulates a critique of American society and its deviances, oscillating between a trashy universe, a resolutely pop aesthetic, juggling between high culture, popular culture, and countercultures.
+            </div>
+            <div class="text-base text-gray-700 merriweather">
+                “Ghost and Spirit” presents a sequence of different corpuses of works or immersive environments by the artist, including, in the Rotunda, the spectacular Kandors, futuristic cities under glass domes. Along the way, the "minor histories" — as he called them — of his own life.
+            </div>
+             <button onclick="speak(this.previousElementSibling.innerText)" class="speech-button" aria-label="Read ">
+                <img src="https://www.vhv.rs/dpng/d/598-5986587_voice-voice-chat-icon-png-transparent-png.png" alt="Read" width="30" height="30">
+            </button>
+        </div>
+        
+        <!-- Right column for user input -->
+        <div class="space-y-6">
+            <img class="w-full h-auto" src="https://www.pinaultcollection.com/sites/default/files/styles/card/public/expo/main/E00690-003-DET-008-hd_KELLEY_KandorsFullSet.png?itok=26GobZGj" alt="Image of MIKE KELLEY's artwork">
+            <textarea class="w-full p-4 text-base text-gray-700 merriweather border-2 border-gray-300 rounded" rows="10" placeholder="Enter translation here..."></textarea>
+            <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">
+                Save translation
+            </button>
+            
+            <button onclick="toggleListening()" class="microphone-button" aria-label="Start voice typing">
+                <img src="https://images.freeimages.com/fic/images/icons/2770/ios_7_icons/512/micro.png" alt="Start voice typing" width="30" height="30">
             </button>
         </div>
     </div>
-</body>
 
+    <!-- Bottom navigation buttons -->
+    <div class="py-4 text-center">
+        <button class="carousel-button p-2 rounded-full mx-2">
+            <i class="fas fa-chevron-left"></i> Previous translation
+        </button>
+        <button class="carousel-button p-2 rounded-full mx-2">
+            Next translation <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+</div>
+<script>
+    function speak(text) {
+        var msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+</body>
 </html>
