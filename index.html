@@ -92,29 +92,26 @@
         <div class="space-y-6">
             <img class="w-full h-auto" src="https://www.pinaultcollection.com/sites/default/files/styles/card/public/expo/main/E00690-003-DET-008-hd_KELLEY_KandorsFullSet.png?itok=26GobZGj" alt="Image of MIKE KELLEY's artwork">
             <div class="text-base text-gray-700 merriweather">
-                Unclassifiable, this artist stands among the most influential figures of the late 20th century. His work formulates a critique of American society and its deviances, oscillating between a trashy universe, a resolutely pop aesthetic, juggling between high culture, popular culture, and countercultures.
-            </div>
-            <div class="text-base text-gray-700 merriweather">
-                “Ghost and Spirit” presents a sequence of different corpuses of works or immersive environments by the artist, including, in the Rotunda, the spectacular Kandors, futuristic cities under glass domes. Along the way, the "minor histories" — as he called them — of his own life.
-            </div>
-             <button onclick="speak(this.previousElementSibling.innerText)" class="speech-button" aria-label="Read ">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id semper metus. Fusce pulvinar consectetur nisl eu auctor. Maecenas id tortor dapibus nisi lacinia tempus. Sed eu tristique erat, in sagittis nisi. Mauris porttitor euismod mattis. Integer euismod faucibus quam at imperdiet. Morbi vitae mollis lorem. Pellentesque rutrum quam non sapien aliquet, tincidunt malesuada dolor euismod. Aliquam ac dui placerat, maximus mi a, lacinia ex. Phasellus eu quam auctor, maximus lorem et, fermentum tellus. Etiam scelerisque ex non libero maximus, vitae lobortis erat suscipit. Vivamus tristique in ipsum placerat mattis. Integer rhoncus quam id odio finibus cursus.
+          </div>
+          <button onclick="speak(this.previousElementSibling.innerText)" class="speech-button" aria-label="Read">
                 <img src="https://www.vhv.rs/dpng/d/598-5986587_voice-voice-chat-icon-png-transparent-png.png" alt="Read" width="30" height="30">
             </button>
-        </div>
+        </div>      
         
         <!-- Right column for user input -->
         <div class="space-y-6">
             <img class="w-full h-auto" src="https://www.pinaultcollection.com/sites/default/files/styles/card/public/expo/main/E00690-003-DET-008-hd_KELLEY_KandorsFullSet.png?itok=26GobZGj" alt="Image of MIKE KELLEY's artwork">
-            <textarea class="w-full p-4 text-base text-gray-700 merriweather border-2 border-gray-300 rounded" rows="10" placeholder="Enter translation here..."></textarea>
+            <textarea id="speechToText" class="w-full p-4 text-base text-gray-700 merriweather border-2 border-gray-300 rounded" rows="10" placeholder="Start writing or speaking..."></textarea>
             <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">
                 Save translation
             </button>
-            
             <button onclick="toggleListening()" class="microphone-button" aria-label="Start voice typing">
                 <img src="https://images.freeimages.com/fic/images/icons/2770/ios_7_icons/512/micro.png" alt="Start voice typing" width="30" height="30">
             </button>
         </div>
     </div>
+
 
     <!-- Bottom navigation buttons -->
     <div class="py-4 text-center">
@@ -132,6 +129,49 @@
         msg.text = text;
         window.speechSynthesis.speak(msg);
     }
+       
+  <script>
+    // Text-to-speech function
+    function speak(text) {
+        var msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        window.speechSynthesis.speak(msg);
+    }
+    
+    // Speech recognition for dictation
+    var recognition;
+    var isListening = false;
+
+    // Check if the browser supports speech recognition
+    if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+        recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.onresult = function(event) {
+            var speechResult = event.results[0][0].transcript;
+            document.getElementById('speechToText').value += speechResult + ' ';
+        };
+
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error', event.error);
+        };
+    } else {
+        alert('Your browser does not support speech recognition. Please use a compatible browser.');
+    }
+
+    // Function to start/stop speech recognition
+    function toggleListening() {
+        if (isListening) {
+            recognition.stop();
+            isListening = false;
+        } else {
+            recognition.start();
+            isListening = true;
+        }
+    }
 </script>
+
 </body>
 </html>
