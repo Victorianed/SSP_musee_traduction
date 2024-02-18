@@ -55,9 +55,17 @@
             outline: none;
             box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
         }
+        
+        
+        .toggle-speech:hover {
+            background-color: white;
+            color: black;
+            border: 1px solid #4CAF50;
+        }
     </style>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
 <body class="bg-white">
@@ -76,33 +84,55 @@
             </button>
         </div>
         
-        <!-- History button -->
+        <!-- bouton de l'historique -->
         <button class="history-button p-2 rounded text-sm">
             View history
         </button>
     </nav>
 
-    <!-- Title section -->
+    <!-- Titre -->
     <header class="mt-6 text-center">
         <h1 class="text-3xl leading-9 font-bold text-gray-900 merriweather">
             MIKE KELLEY: Ghost and Spirit
         </h1>
+      
+        </div>
+        <div class="origin-top-right absolute right-0 mt-2 w-26 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu-button" tabindex="-1">
+            <div class="py-1" role="none">
+                <!-- menu langue -->
+                
+                <select id="languages" name="languages" class="block text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="es">Español</option>
+                    <option value="es">Deutsch</option>
+                    <option value="es">Italien</option>
+                    <option value="es">Ελληνικά</option>
+                    <option value="fr">普通话</option>
+                    <option value="en">عرب</option>
+                    
+                  
+                  
+                    <!-- ajout d'autant de langage qu'on veut -->
+                </select>
+            </div>
+        </div>
     </header>
 
-    <!-- Content area -->
+    <!-- Traduction -->
     <div class="py-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-        <!-- Left column for translation display -->
+        <!-- Colonne de gauche VO -->
         <div class="space-y-6">
             <img class="w-full h-auto" src="https://www.pinaultcollection.com/sites/default/files/styles/card/public/expo/main/E00690-003-DET-008-hd_KELLEY_KandorsFullSet.png?itok=26GobZGj" alt="Image of MIKE KELLEY's artwork">
-            <div class="text-base text-gray-700 merriweather">
+            <div class="text-base text-gray-700 merriweather" id="textToRead">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id semper metus. Fusce pulvinar consectetur nisl eu auctor. Maecenas id tortor dapibus nisi lacinia tempus. Sed eu tristique erat, in sagittis nisi. Mauris porttitor euismod mattis. Integer euismod faucibus quam at imperdiet. Morbi vitae mollis lorem. Pellentesque rutrum quam non sapien aliquet, tincidunt malesuada dolor euismod. Aliquam ac dui placerat, maximus mi a, lacinia ex. Phasellus eu quam auctor, maximus lorem et, fermentum tellus. Etiam scelerisque ex non libero maximus, vitae lobortis erat suscipit. Vivamus tristique in ipsum placerat mattis. Integer rhoncus quam id odio finibus cursus.
           </div>
-          <button onclick="speak(this.previousElementSibling.innerText)" class="speech-button" aria-label="Read">
-                <img src="https://www.vhv.rs/dpng/d/598-5986587_voice-voice-chat-icon-png-transparent-png.png" alt="Read" width="30" height="30">
+            <button onclick="toggleSpeech()" class="toggle-speech" id="toggleSpeechButton">
+            <img src="https://www.vhv.rs/dpng/d/598-5986587_voice-voice-chat-icon-png-transparent-png.png" alt="Read" width="30" height="30">
             </button>
         </div>      
         
-        <!-- Right column for user input -->
+        <!-- colonne de droite traduction -->
         <div class="space-y-6">
             <img class="w-full h-auto" src="https://www.pinaultcollection.com/sites/default/files/styles/card/public/expo/main/E00690-003-DET-008-hd_KELLEY_KandorsFullSet.png?itok=26GobZGj" alt="Image of MIKE KELLEY's artwork">
             <textarea id="speechToText" class="w-full p-4 text-base text-gray-700 merriweather border-2 border-gray-300 rounded" rows="10" placeholder="Start writing or speaking..."></textarea>
@@ -116,11 +146,15 @@
     </div>
 
 
-    <!-- Bottom navigation buttons -->
+    <!-- Bouton de navigation entre les pages -->
     <div class="py-4 text-center">
+      <textarea id="speechToText" class="w-full p-4 text-base text-gray-700 merriweather border-2 border-gray-300 rounded" rows="1" placeholder="Any comment about the translation or the piece of art..."></textarea>
         <button class="carousel-button p-2 rounded-full mx-2">
             <i class="fas fa-chevron-left"></i> Previous translation
         </button>
+      <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">
+                Save comment
+            </button>
         <button class="carousel-button p-2 rounded-full mx-2">
             Next translation <i class="fas fa-chevron-right"></i>
         </button>
@@ -132,14 +166,32 @@
         msg.text = text;
         window.speechSynthesis.speak(msg);
     }
-    // Text-to-speech function
-    function speak(text) {
-        var msg = new SpeechSynthesisUtterance();
-        msg.text = text;
-        window.speechSynthesis.speak(msg);
-    }
+    // Text-to-speech 
+    var synth = window.speechSynthesis;
+        var utterance = new SpeechSynthesisUtterance();
+        var isSpeaking = false; // Pour suivre l'état de la synthèse vocale
+
+        function toggleSpeech() {
+            if (!isSpeaking) {
+                // Lire le texte si la synthèse vocale n'est pas en cours
+                utterance.text = document.getElementById('textToRead').innerText;
+                utterance.onend = function() {
+                    isSpeaking = false;
+                    document.getElementById('toggleSpeechButton').textContent = 'Start';
+                };
+                synth.speak(utterance);
+                isSpeaking = true;
+                document.getElementById('toggleSpeechButton').textContent = 'Stop';
+            } else {
+                // Arrêter la synthèse vocale si elle est en cours
+                synth.cancel();
+                isSpeaking = false;
+                document.getElementById('toggleSpeechButton').textContent = 'Start';
+            }
+        }
+
     
-    // Speech recognition for dictation
+    // Speech to text
     var recognition;
     var isListening = false;
 
@@ -162,7 +214,7 @@
         alert('Your browser does not support speech recognition. Please use a compatible browser.');
     }
 
-    // Function to start/stop speech recognition
+    //start/stop pour la reconnaissance vocale 
     function toggleListening() {
         if (isListening) {
             recognition.stop();
@@ -172,7 +224,7 @@
             isListening = true;
         }
     }
-   // Your web app's Firebase configuration
+   // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCrLN5MLVU316SNhgv7jNBcYdld_KNE1eI",
             authDomain: "traduction-collective.firebaseapp.com",
@@ -182,11 +234,11 @@
             appId: "1:332818252177:web:2155a4f222c03cb7a39a30"
         };
 
-        // Initialize Firebase
+        // Initialise Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Function to save translation to Firebase Firestore
+        // Fonction de sauvegarde de Firebase dans le Firestore
         function saveTranslationToFirebase() {
             const textArea = document.getElementById('speechToText');
             const textToSave = textArea.value;
