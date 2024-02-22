@@ -85,7 +85,7 @@
         </div>
         
         <!-- bouton de l'historique -->
-        <button class="history-button p-2 rounded text-sm">
+        <button onclick="viewHistory()" class="history-button p-2 rounded text-sm">
             View history
         </button>
     </nav>
@@ -136,7 +136,7 @@
         <div class="space-y-6">
             <img class="w-full h-auto" src="https://www.pinaultcollection.com/sites/default/files/styles/card/public/expo/main/E00690-003-DET-008-hd_KELLEY_KandorsFullSet.png?itok=26GobZGj" alt="Image of MIKE KELLEY's artwork">
             <textarea id="speechToText" class="w-full p-4 text-base text-gray-700 merriweather border-2 border-gray-300 rounded" rows="10" placeholder="Start writing or speaking..."></textarea>
-            <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">
+            <button onclick="saveTranslationToFirebase()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">
                 Save translation
             </button>
             <button onclick="toggleListening()" class="microphone-button" aria-label="Start voice typing">
@@ -257,7 +257,44 @@
                 alert("Please enter some text before saving.");
             }
         }
-</script>
+    function saveTranslationToFirebase() {
+        const textArea = document.getElementById('speechToText');
+        const textToSave = textArea.value;
 
+        if (textToSave.trim() !== "") {
+            db.collection('translations').add({
+                text: textToSave,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                console.log('Translation saved!');
+                textArea.value = ''; // Clear the textarea after saving
+            }).catch(error => {
+                console.error('Error saving translation: ', error);
+            });
+        } else {
+            alert("Please enter some text before saving.");
+        }
+    }
+
+    // Fonction pour récupérer l'historique des traductions
+    function viewHistory() {
+        db.collection('translations').orderBy('timestamp', 'desc').get().then(querySnapshot => {
+            const historyContainer = document.getElementById('historyContainer');
+            historyContainer.innerHTML = ''; // Clear previous history
+            querySnapshot.forEach(doc => {
+                // Ajouter chaque traduction à l'élément d'historique
+                const div = document.createElement('div');
+                div.textContent = doc.data().text;
+                historyContainer.appendChild(div);
+            });
+        }).catch(error => {
+            console.error('Error getting translations: ', error);
+        });
+    }
+    
+</script>
+<div id="historyContainer" class="history-container">
+    <!-- Les traductions de l'historique s'afficheront ici -->
+</div>
 </body>
 </html>
