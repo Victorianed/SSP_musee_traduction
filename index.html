@@ -35,17 +35,7 @@
             border: 1px solid #ddd;
             border-radius: 0.375rem;
         }
-       .speech-button {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-        .speech-button:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
-        }
-       .speech-button, .microphone-button {
+        .speech-button, .microphone-button {
             background-color: transparent;
             border: none;
             cursor: pointer;
@@ -55,246 +45,184 @@
             outline: none;
             box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
         }
-        
-        
         .toggle-speech:hover {
             background-color: white;
             color: black;
             border: 1px solid #4CAF50;
         }
+        .modal {
+            transition: opacity 0.25s ease;
+            display: none; /* Ajouté pour cacher par défaut */
+        }
+        .modal-content {
+            margin: 10% auto;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            width: 80%;
+            position: relative;
+        }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            transform: rotate(45deg);
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
     </style>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-
 </head>
 <body class="bg-white">
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <nav class="border-b border-gray-200 py-4 flex justify-between items-center">
-        <!-- Logo -->
-        <img class="h-10 w-auto" src="https://upload.wikimedia.org/wikipedia/fr/thumb/1/12/Logo_Bourse_de_Commerce_Pinault_Collection.svg/1200px-Logo_Bourse_de_Commerce_Pinault_Collection.svg.png?20220209162109" alt="Bourse de Commerce Logo">
-        
-        <!-- Login -->
+        <img class="h-20 w-auto" src="https://upload.wikimedia.org/wikipedia/fr/thumb/1/12/Logo_Bourse_de_Commerce_Pinault_Collection.svg/1200px-Logo_Bourse_de_Commerce_Pinault_Collection.svg.png" alt="Bourse de Commerce Logo">
         <div class="login-form">
             <input type="text" class="login-input" placeholder="Username">
             <input type="password" class="login-input" placeholder="Password">
-            <button class="login-button p-2 rounded text-sm">
-                Login
-            </button>
+            <button id="saveLoginBtn" class="login-button p-2 rounded text-sm">Login</button>
         </div>
-        
-        <!-- bouton de l'historique -->
-        <button onclick="viewHistory()" class="history-button p-2 rounded text-sm">
-            View history
-        </button>
+        <button id="viewHistoryBtn" class="history-button p-2 rounded text-sm">View history</button>
     </nav>
 
-    <!-- Titre -->
     <header class="mt-6 text-center">
-        <h1 class="text-3xl leading-9 font-bold text-gray-900 merriweather">
-            MIKE KELLEY: Ghost and Spirit
-        </h1>
-      
-        </div>
-        <div class="origin-top-right absolute right-0 mt-2 w-26 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu-button" tabindex="-1">
-            <div class="py-1" role="none">
-                <!-- menu langue -->
-                
-                <select id="languages" name="languages" class="block text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                    <option value="en">English</option>
-                    <option value="fr">Français</option>
-                    <option value="es">Español</option>
-                    <option value="es">Deutsch</option>
-                    <option value="es">Italien</option>
-                    <option value="es">Ελληνικά</option>
-                    <option value="fr">普通话</option>
-                    <option value="en">عرب</option>
-                    
-                  
-                  
-                    <!-- ajout d'autant de langage qu'on veut -->
-                </select>
-            </div>
-        </div>
+        <h1 class="text-3xl leading-9 font-bold text-gray-900 merriweather">MIKE KELLEY: Ghost and Spirit</h1>
     </header>
 
-    <!-- Traduction -->
     <div class="py-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-        <!-- Colonne de gauche VO -->
         <div class="space-y-6">
             <img class="w-full h-auto" src="https://www.pinaultcollection.com/sites/default/files/styles/card/public/expo/main/E00690-003-DET-008-hd_KELLEY_KandorsFullSet.png?itok=26GobZGj" alt="Image of MIKE KELLEY's artwork">
-            <div class="text-base text-gray-700 merriweather" id="textToRead">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id semper metus. Fusce pulvinar consectetur nisl eu auctor. Maecenas id tortor dapibus nisi lacinia tempus. Sed eu tristique erat, in sagittis nisi. Mauris porttitor euismod mattis. Integer euismod faucibus quam at imperdiet. Morbi vitae mollis lorem. Pellentesque rutrum quam non sapien aliquet, tincidunt malesuada dolor euismod. Aliquam ac dui placerat, maximus mi a, lacinia ex. Phasellus eu quam auctor, maximus lorem et, fermentum tellus. Etiam scelerisque ex non libero maximus, vitae lobortis erat suscipit. Vivamus tristique in ipsum placerat mattis. Integer rhoncus quam id odio finibus cursus.
-          </div>
-            <button onclick="toggleSpeech()" class="toggle-speech" id="toggleSpeechButton">
-            <img src="https://www.vhv.rs/dpng/d/598-5986587_voice-voice-chat-icon-png-transparent-png.png" alt="Read" width="30" height="30">
-            </button>
+            <div class="text-base text-gray-700 merriweather" id="textToRead">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</div>
+            <button onclick="toggleSpeech()" class="toggle-speech" id="toggleSpeechButton"><img src="https://www.vhv.rs/dpng/d/598-5986587_voice-voice-chat-icon-png-transparent-png.png" alt="Read" width="30" height="30"></button>
         </div>      
         
-        <!-- colonne de droite traduction -->
         <div class="space-y-6">
             <img class="w-full h-auto" src="https://www.pinaultcollection.com/sites/default/files/styles/card/public/expo/main/E00690-003-DET-008-hd_KELLEY_KandorsFullSet.png?itok=26GobZGj" alt="Image of MIKE KELLEY's artwork">
-            <textarea id="speechToText" class="w-full p-4 text-base text-gray-700 merriweather border-2 border-gray-300 rounded" rows="10" placeholder="Start writing or speaking..."></textarea>
-            <button onclick="saveTranslationToFirebase()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">
-                Save translation
-            </button>
-            <button onclick="toggleListening()" class="microphone-button" aria-label="Start voice typing">
-                <img src="https://images.freeimages.com/fic/images/icons/2770/ios_7_icons/512/micro.png" alt="Start voice typing" width="30" height="30">
-            </button>
+            <textarea id="translationTextarea" class="w-full p-4 text-base text-gray-700 merriweather border-2 border-gray-300 rounded" rows="10" placeholder="Start writing or speaking..."></textarea>
+            <div id="errorMessage" class="text-red-500 hidden">You haven't written anything.</div>
+            <button id="saveTranslationBtn" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">Save translation</button>
+            <button onclick="toggleListening()" class="microphone-button" aria-label="Start voice typing"><img src="https://images.freeimages.com/fic/images/icons/2770/ios_7_icons/512/micro.png" alt="Start voice typing" width="30" height="30"></button>
         </div>
     </div>
 
-
-    <!-- Bouton de navigation entre les pages -->
     <div class="py-4 text-center">
-      <textarea id="speechToText" class="w-full p-4 text-base text-gray-700 merriweather border-2 border-gray-300 rounded" rows="1" placeholder="Any comment about the translation or the piece of art..."></textarea>
-        <button class="carousel-button p-2 rounded-full mx-2">
-            <i class="fas fa-chevron-left"></i> Previous translation
-        </button>
-      <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">
-                Save comment
-            </button>
-        <button class="carousel-button p-2 rounded-full mx-2">
-            Next translation <i class="fas fa-chevron-right"></i>
-        </button>
+      <textarea id="commentTextarea" class="w-full p-4 text-base text-gray-700 merriweather border-2 border-gray-300 rounded" rows="1" placeholder="Any comment about the translation or the piece of art..."></textarea>
+        <button class="carousel-button p-2 rounded-full mx-2"><i class="fas fa-chevron-left"></i> Previous translation</button>
+        <button id="saveCommentBtn" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">Save comment</button>
+        <button class="carousel-button p-2 rounded-full mx-2">Next translation <i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <div id="historyModal" class="modal hidden fixed z-10 left-0 top-0 w-full h-full overflow-auto bg-black bg-opacity-40">
+        <div class="modal-content p-5">
+            <span id="closeModal" class="close-button">&times;</span>
+            <p>Voici l'historique...</p>
+        </div>
     </div>
 </div>
-<script>
-    function speak(text) {
-        var msg = new SpeechSynthesisUtterance();
-        msg.text = text;
-        window.speechSynthesis.speak(msg);
-    }
-    // Text-to-speech 
-    var synth = window.speechSynthesis;
-        var utterance = new SpeechSynthesisUtterance();
-        var isSpeaking = false; // Pour suivre l'état de la synthèse vocale
 
-        function toggleSpeech() {
+<script>
+    
+      // Initialisation des fonctionnalités au chargement du document
+    document.addEventListener('DOMContentLoaded', function() {
+        setupModal();
+        setupSpeech();
+        setupFormActions();
+    });
+
+    function setupModal() {
+        const historyModal = document.getElementById("historyModal");
+        const viewHistoryBtn = document.getElementById("viewHistoryBtn");
+        const closeModal = document.getElementById("closeModal");
+
+        viewHistoryBtn.onclick = () => historyModal.style.display = "block";
+        closeModal.onclick = () => historyModal.style.display = "none";
+        window.onclick = (event) => {
+            if (event.target == historyModal) {
+                historyModal.style.display = "none";
+            }
+        };
+    }
+
+    function setupSpeech() {
+        var isSpeaking = false;
+        window.toggleSpeech = function() {
+            const synth = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance(document.getElementById('textToRead').innerText);
+            utterance.onend = () => {
+                isSpeaking = false;
+                document.getElementById('toggleSpeechButton').innerText = 'Read Aloud';
+            };
+
             if (!isSpeaking) {
-                // Lire le texte si la synthèse vocale n'est pas en cours
-                utterance.text = document.getElementById('textToRead').innerText;
-                utterance.onend = function() {
-                    isSpeaking = false;
-                    document.getElementById('toggleSpeechButton').textContent = 'Start';
-                };
                 synth.speak(utterance);
                 isSpeaking = true;
-                document.getElementById('toggleSpeechButton').textContent = 'Stop';
+                document.getElementById('toggleSpeechButton').innerText = 'Stop Reading';
             } else {
-                // Arrêter la synthèse vocale si elle est en cours
                 synth.cancel();
                 isSpeaking = false;
-                document.getElementById('toggleSpeechButton').textContent = 'Start';
             }
-        }
-
-    
-    // Speech to text
-    var recognition;
-    var isListening = false;
-
-    // Check if the browser supports speech recognition
-    if (window.SpeechRecognition || window.webkitSpeechRecognition) {
-        recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = 'en-US';
-        recognition.interimResults = false;
-        recognition.maxAlternatives = 1;
-
-        recognition.onresult = function(event) {
-            var speechResult = event.results[0][0].transcript;
-            document.getElementById('speechToText').value += speechResult + ' ';
         };
 
-        recognition.onerror = function(event) {
-            console.error('Speech recognition error', event.error);
-        };
-    } else {
-        alert('Your browser does not support speech recognition. Please use a compatible browser.');
+        setupListening();
     }
 
-    //start/stop pour la reconnaissance vocale 
-    function toggleListening() {
-        if (isListening) {
-            recognition.stop();
-            isListening = false;
-        } else {
-            recognition.start();
-            isListening = true;
-        }
-    }
-   // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCrLN5MLVU316SNhgv7jNBcYdld_KNE1eI",
-            authDomain: "traduction-collective.firebaseapp.com",
-            projectId: "traduction-collective",
-            storageBucket: "traduction-collective.appspot.com",
-            messagingSenderId: "332818252177",
-            appId: "1:332818252177:web:2155a4f222c03cb7a39a30"
-        };
+    function setupListening() {
+        var recognition;
+        var isListening = false;
+        window.toggleListening = function() {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert("Your browser does not support speech recognition.");
+                return;
+            }
 
-        // Initialise Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+            if (!recognition) {
+                recognition = new webkitSpeechRecognition();
+                recognition.lang = 'en-US';
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+                recognition.onresult = (event) => document.getElementById('translationTextarea').value += event.results[0][0].transcript + ' ';
+            }
 
-        // Fonction de sauvegarde de Firebase dans le Firestore
-        function saveTranslationToFirebase() {
-            const textArea = document.getElementById('speechToText');
-            const textToSave = textArea.value;
-
-            if (textToSave.trim() !== "") {
-                db.collection('translations').add({
-                    text: textToSave,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                }).then(() => {
-                    console.log('Translation saved!');
-                    textArea.value = ''; // Clear the textarea after saving
-                }).catch(error => {
-                    console.error('Error saving translation: ', error);
-                });
+            if (!isListening) {
+                recognition.start();
+                isListening = true;
             } else {
-                alert("Please enter some text before saving.");
+                recognition.stop();
+                isListening = false;
+            }
+        };
+    }
+
+    function setupFormActions() {
+        document.getElementById("saveTranslationBtn").addEventListener("click", function() {
+            handleFormAction("translationTextarea", "errorMessage");
+        });
+
+        document.getElementById("saveCommentBtn").addEventListener("click", function() {
+            handleFormAction("commentTextarea");
+        });
+
+        function handleFormAction(textareaId, errorMessageId = null) {
+            const textarea = document.getElementById(textareaId);
+            const errorMessage = errorMessageId ? document.getElementById(errorMessageId) : null;
+
+            if (textarea.value.trim() === "") {
+                if (errorMessage) {
+                    errorMessage.classList.remove("hidden");
+                } else {
+                    alert("You haven't written anything.");
+                }
+            } else {
+                textarea.value = "";
+                if (errorMessage) {
+                    errorMessage.classList.add("hidden");
+                }
             }
         }
-    function saveTranslationToFirebase() {
-        const textArea = document.getElementById('speechToText');
-        const textToSave = textArea.value;
-
-        if (textToSave.trim() !== "") {
-            db.collection('translations').add({
-                text: textToSave,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(() => {
-                console.log('Translation saved!');
-                textArea.value = ''; // Clear the textarea after saving
-            }).catch(error => {
-                console.error('Error saving translation: ', error);
-            });
-        } else {
-            alert("Please enter some text before saving.");
-        }
     }
-
-    // Fonction pour récupérer l'historique des traductions
-    function viewHistory() {
-        db.collection('translations').orderBy('timestamp', 'desc').get().then(querySnapshot => {
-            const historyContainer = document.getElementById('historyContainer');
-            historyContainer.innerHTML = ''; // Clear previous history
-            querySnapshot.forEach(doc => {
-                // Ajouter chaque traduction à l'élément d'historique
-                const div = document.createElement('div');
-                div.textContent = doc.data().text;
-                historyContainer.appendChild(div);
-            });
-        }).catch(error => {
-            console.error('Error getting translations: ', error);
-        });
-    }
-    
 </script>
-<div id="historyContainer" class="history-container">
-    <!-- Les traductions de l'historique s'afficheront ici -->
-</div>
 </body>
 </html>
