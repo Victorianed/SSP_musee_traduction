@@ -92,17 +92,18 @@
         <h1 class="text-3xl leading-9 font-bold text-gray-900 merriweather">MIKE KELLEY: Ghost and Spirit</h1>
     </header>
 
-    <div class="py-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-        <div class="space-y-6">
-            <img class="w-full h-auto" src="https://www.pinaultcollection.com/sites/default/files/styles/card/public/expo/main/E00690-003-DET-008-hd_KELLEY_KandorsFullSet.png?itok=26GobZGj" alt="Image of MIKE KELLEY's artwork">
-            <div class="text-base text-gray-700 merriweather" id="textToRead">
-            <p>« Ghost and Spirit » présente une séquence de différents corpus d’œuvres ou d’environnements immersifs de l’artiste, parmi lesquels sont présentés, dans la Rotonde, les spectaculaires Kandors, villes du futur sous cloches de verre. Affleurent aussi dans le parcours les « histoires mineures » — comme il les appelait — de sa propre pratique : dessins, photographies et écrits préparatoires éclairant le visiteur sur sa pensée.</p> 
+      <div class="py-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <div class="space-y-6">
+                <img class="w-full h-auto" src="https://www.pinaultcollection.com/sites/default/files/styles/card/public/expo/main/E00690-003-DET-008-hd_KELLEY_KandorsFullSet.png?itok=26GobZGj" alt="Image of MIKE KELLEY's artwork">
+                <p class="text-base text-gray-700 merriweather" id="textToRead">
+            « Ghost and Spirit » présente une séquence de différents corpus d’œuvres ou d’environnements immersifs de l’artiste, parmi lesquels sont présentés, dans la Rotonde, les spectaculaires Kandors, villes du futur sous cloches de verre. Affleurent aussi dans le parcours les « histoires mineures » — comme il les appelait — de sa propre pratique : dessins, photographies et écrits préparatoires éclairant le visiteur sur sa pensée.</p> 
+               
             <button onclick="toggleSpeech()" class="toggle-speech" id="toggleSpeechButton"><img src="https://www.vhv.rs/dpng/d/598-5986587_voice-voice-chat-icon-png-transparent-png.png" alt="Read" width="30" height="30"></button>
-        </div>      
-        
-        <div class="space-y-6">
+            </div>
+            <div class="space-y-6">
             <img class="w-full h-auto" src="https://www.pinaultcollection.com/sites/default/files/styles/card/public/expo/main/E00690-003-DET-008-hd_KELLEY_KandorsFullSet.png?itok=26GobZGj" alt="Image of MIKE KELLEY's artwork">
-            <textarea id="translationTextarea" class="w-full p-4 text-base text-gray-700 merriweather border-2 border-gray-300 rounded" rows="10" placeholder="Start writing or speaking..."></textarea>
+
+              <textarea id="translationTextarea" class="w-full p-4 text-base text-gray-700 merriweather border-2 border-gray-300 rounded" rows="10" placeholder="Start writing or speaking..."></textarea>
             <div id="errorMessage" class="text-red-500 hidden">You haven't written anything.</div>
             <button id="saveTranslationBtn" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300">Save translation</button>
             <button onclick="toggleListening()" class="microphone-button" aria-label="Start voice typing"><img src="https://images.freeimages.com/fic/images/icons/2770/ios_7_icons/512/micro.png" alt="Start voice typing" width="30" height="30"></button>
